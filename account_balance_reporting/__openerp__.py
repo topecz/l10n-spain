@@ -2,9 +2,10 @@
 ##############################################################################
 #
 #    OpenERP - Account balance reporting engine
-#    Copyright (C) 2009 Pexego Sistemas Informáticos. All Rights Reserved
+#    Copyright (C) 2009 Pexego Sistemas Informáticos.
+#    Borja López Soilán (Pexego) - borjals@pexego.es
 #    AvanzOSC, Advanced Open Source Consulting
-#    Copyright (C) 2011-2012 Iker Coranti (www.avanzosc.es) All Rights Reserved
+#    Copyright (C) 2011-2012 Iker Coranti (www.avanzosc.es)
 #    Adaptado a la versión 7.0 por:
 #        Juanjo Algaz <juanjoa@malagatic.com>   www.malagatic.com
 #        Joaquín Gutierrez <joaquing.pedrosa@gmail.com>   gutierrezweb.es
@@ -27,12 +28,12 @@
 
 {
     "name": "Account balance reporting engine",
-    "version": "0.3",
-    "author": "Pexego",
+    "version": "8.0.0.3.0",
+    "author": "Pexego,Odoo Community Association (OCA)",
     "website": "http://www.pexego.es",
     "category": "Accounting",
     "contributors": [
-        "Juanjo Algaz  <juanjoa@malagatic.com>",
+        "Juanjo Algaz <juanjoa@malagatic.com>",
         "Joaquín Gutierrez <joaquing.pedrosa@gmail.com>",
         "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
         "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",

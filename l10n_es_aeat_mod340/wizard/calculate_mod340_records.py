@@ -20,7 +20,6 @@
 #
 ##############################################################################
 
-from openerp import netsvc
 import time
 import re
 from openerp.tools.translate import _
@@ -32,18 +31,11 @@ class L10nEsAeatMod340CalculateRecords(orm.TransientModel):
     _name = "l10n.es.aeat.mod340.calculate_records"
     _description = u"AEAT Model 340 Wizard - Calculate Records"
 
-    def _wkf_calculate_records(self, cr, uid, ids, context=None):
-        self._calculate_records(cr, uid, ids, context, recalculate=False)
-        wf_service = netsvc.LocalService("workflow")
-        wf_service.trg_validate(uid, 'l10n.es.aeat.mod340.report',
-                                ids and ids[0], 'calculate', cr)
-
     def _calculate_records(self, cr, uid, ids, context=None, recalculate=True):
         report_obj = self.pool['l10n.es.aeat.mod340.report']
         mod340 = report_obj.browse(cr, uid, ids)[0]
         invoices340 = self.pool['l10n.es.aeat.mod340.issued']
         invoices340_rec = self.pool['l10n.es.aeat.mod340.received']
-        period_obj = self.pool['account.period']
         issued_obj = self.pool['l10n.es.aeat.mod340.tax_line_issued']
         received_obj = self.pool['l10n.es.aeat.mod340.tax_line_received']
         mod340.write({
@@ -53,19 +45,7 @@ class L10nEsAeatMod340CalculateRecords(orm.TransientModel):
         if not mod340.company_id.partner_id.vat:
             raise orm.except_orm(mod340.company_id.partner_id.name,
                                  _('This company dont have NIF'))
-        wf_service = netsvc.LocalService("workflow")
-        wf_service.trg_validate(uid, 'l10n.es.aeat.mod347.report',
-                                ids and ids[0], 'calculate', cr)
-        code = '340' + mod340.fiscalyear_id.code + ''
-        code += mod340.period_to.date_stop[5:7] + '0001'
-        account_period_ids = period_obj.build_ctx_periods(
-            cr, uid, mod340.period_from.id, mod340.period_to.id)
-        if len(account_period_ids) is 0:
-            raise orm.except_orm(
-                _('Error'),
-                _("The periods selected don't belong to the fiscal year %s")
-                % (mod340.fiscalyear_id.name))
-
+        account_period_ids = [x.id for x in mod340.periods]
         # Limpieza de las facturas calculadas anteriormente
         del_ids = invoices340.search(cr, uid, [('mod340_id', '=', mod340.id)])
         if del_ids:
@@ -84,16 +64,22 @@ class L10nEsAeatMod340CalculateRecords(orm.TransientModel):
             include = False
             for tax_line in invoice.tax_line:
                 if tax_line.base_code_id and tax_line.base:
-                    if tax_line.base_code_id.mod340 is True:
+                    if tax_line.base_code_id.mod340:
                         include = True
-            if include is True:
-                if invoice.partner_id.vat_type == 1:
+                        break
+            if include:
+                if invoice.partner_id.vat_type == '1':
                     if not invoice.partner_id.vat:
                         raise orm.except_orm(
                             _('La siguiente empresa no tiene asignado nif:'),
                             invoice.partner_id.name)
-                country_code, nif = (re.match(r"([A-Z]{0,2})(.*)",
-                                              invoice.partner_id.vat).groups())
+                if invoice.partner_id.vat:
+                    country_code, nif = (
+                        re.match(r"([A-Z]{0,2})(.*)",
+                                 invoice.partner_id.vat).groups())
+                else:
+                    country_code = False
+                    nif = False
                 values = {
                     'mod340_id': mod340.id,
                     'partner_id': invoice.partner_id.id,
@@ -155,7 +141,6 @@ class L10nEsAeatMod340CalculateRecords(orm.TransientModel):
                           'correspond to AmountUntaxed on Invoice %.2f') %
                         (invoice.number, check_base,
                          invoice.amount_untaxed * sign))
-
         if recalculate:
             mod340.write({
                 'state': 'calculated',

@@ -21,9 +21,10 @@
 
 {
     "name": "Gestión de activos fijos para España",
-    "version": "1.0",
+    "version": "8.0.1.1.0",
     "depends": ["account_asset"],
-    "author": "Serv. Tecnol. Avanzados - Pedro M. Baeza",
+    "author": "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
+              "Odoo Community Association (OCA)",
     "description": """
 Gestión de activos fijos española
 =================================

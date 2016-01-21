@@ -27,8 +27,8 @@
 
 {
     "name": "Informes de cuentas anuales españoles",
-    "version": "0.1",
-    "author": "Pexego, Zikzakmedia",
+    "version": "8.0.0.1.0",
+    "author": "Pexego, Zikzakmedia,Odoo Community Association (OCA)",
     "contributors": [
         "Juanjo Algaz <juanjoa@malagatic.com>",
         "Joaquín Gutierrez <joaquing.pedrosa@gmail.com>",
@@ -55,9 +55,9 @@ por el módulo *account_balance_reporting*:
 Las plantillas están basadas en los modelos para el depósito de cuentas anuales
 del Registro Mercantil:
 
-    * *Normal*: http://www.mjusticia.gob.es/cs/Satellite/1292342988403
-    * *Abreviado*: http://www.mjusticia.gob.es/cs/Satellite/1292342988373
-    * *PYMEs*: http://www.mjusticia.gob.es/cs/Satellite/1292342988358
+* *Normal*: http://www.mjusticia.gob.es/cs/Satellite/Portal/1292427306020
+* *Abreviado*: http://www.mjusticia.gob.es/cs/Satellite/Portal/1292427306005
+* *PYMEs*: http://www.mjusticia.gob.es/cs/Satellite/Portal/1292427306035
     """,
     "depends": [
         'l10n_es',

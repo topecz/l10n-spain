@@ -32,8 +32,8 @@
 
 {
     'name': "Cierre de ejercicio fiscal para España",
-    'version': "1.0",
-    'author': "Pexego",
+    'version': "8.0.1.0.0",
+    'author': "Pexego,Odoo Community Association (OCA)",
     'website': "http://www.pexego.es",
     'contributors': ['Pedro M. Baeza', 'Joaquín Gutierrez'],
     'category': "Localisation/Accounting",
@@ -76,9 +76,9 @@ deshacer las operaciones fácilmente.
         "wizard/wizard_run_view.xml",
         "security/security.xml",
         "security/ir.model.access.csv",
-        "fiscalyear_closing_workflow.xml",
-        "fiscalyear_closing_view.xml",
-        "hide_account_wizards.xml",
+        "views/fiscalyear_closing_workflow.xml",
+        "views/fiscalyear_closing_view.xml",
+        "views/hide_account_wizards.xml",
     ],
     "active": False,
     "installable": True,
